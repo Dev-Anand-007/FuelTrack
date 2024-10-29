@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2024 at 02:02 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Oct 29, 2024 at 07:58 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Database: `petrol_pump`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `date` date NOT NULL,
+  `status` enum('Present','Absent','Leave') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`id`, `employee_id`, `date`, `status`) VALUES
+(1, 1, '2024-10-17', 'Leave'),
+(2, 2, '2024-10-17', 'Leave'),
+(3, 3, '2024-10-17', 'Leave'),
+(4, 1, '2024-10-16', 'Absent'),
+(5, 2, '2024-10-16', 'Present'),
+(6, 3, '2024-10-16', 'Leave'),
+(7, 1, '2024-10-21', 'Leave'),
+(8, 2, '2024-10-21', 'Leave'),
+(9, 3, '2024-10-21', 'Leave');
 
 -- --------------------------------------------------------
 
@@ -102,6 +130,32 @@ CREATE TABLE `emailsetting` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL,
+  `employeeName` varchar(255) DEFAULT NULL,
+  `employeeEmail` varchar(255) DEFAULT NULL,
+  `employeePhone` varchar(20) DEFAULT NULL,
+  `employeeAddress` varchar(255) DEFAULT NULL,
+  `employeeAccountNo` varchar(50) DEFAULT NULL,
+  `shift` varchar(50) DEFAULT NULL,
+  `delete_status` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`id`, `employeeName`, `employeeEmail`, `employeePhone`, `employeeAddress`, `employeeAccountNo`, `shift`, `delete_status`) VALUES
+(1, 'Amit Mondal', 'amit@gmail.com', '9922728374', 'kalnagate', '889977263423', 'Day', 0),
+(2, 'mousmi', 'mousumi@gmail.com', '8899227364', 'nari', '728364758394', 'Day', 0),
+(3, 'jhuma', 'jhuma@gmail.com', '1234567891', 'nadra', '167891123456', 'Night', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fuel_category`
 --
 
@@ -177,7 +231,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id`, `email`, `password`, `username`, `mobileno`, `image`, `delete_status`) VALUES
-(1, 'mayuri.infospace@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Sevak Petroleum ', '8070807080', '3.jpg', 0);
+(1, 'anand@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'anand', '8070807080', '3.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -199,7 +253,7 @@ CREATE TABLE `manage_web` (
 --
 
 INSERT INTO `manage_web` (`id`, `photo1`, `title`, `photos`, `sitekey`, `secretkey`) VALUES
-(1, '65d1d414d6166.png', 'FuelFlow lite - Developed by Mayuri K.', '65d1d444addef.jpg', '', '');
+(1, '65d1d414d6166.png', 'FuelTrack', '65d1d444addef.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -387,6 +441,13 @@ INSERT INTO `tbl_invoice` (`id`, `build_date`, `customer_id`, `customerPhone`, `
 --
 
 --
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
+
+--
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
@@ -402,6 +463,12 @@ ALTER TABLE `customer`
 -- Indexes for table `emailsetting`
 --
 ALTER TABLE `emailsetting`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -469,6 +536,12 @@ ALTER TABLE `tbl_invoice`
 --
 
 --
+-- AUTO_INCREMENT for table `attendance`
+--
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
@@ -485,6 +558,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `emailsetting`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `fuel_category`
@@ -545,34 +624,18 @@ ALTER TABLE `supplier`
 --
 ALTER TABLE `tbl_invoice`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
--- NEWLY ADDED COLUMN
--- EMPLOYEE
-
-CREATE TABLE `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employeeName` varchar(255) DEFAULT NULL,
-  `employeeEmail` varchar(255) DEFAULT NULL,
-  `employeePhone` varchar(20) DEFAULT NULL,
-  `employeeAddress` varchar(255) DEFAULT NULL,
-  `accountNo` varchar(50) DEFAULT NULL,
-  `shift` varchar(50) DEFAULT NULL,
-  `delete_status` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE `attendance` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `employee_id` INT,
-    `date` DATE NOT NULL,
-    `status` ENUM('Present', 'Absent') NOT NULL,
-    FOREIGN KEY (`employee_id`) REFERENCES `employee`(`id`) ON DELETE CASCADE
-);
-
