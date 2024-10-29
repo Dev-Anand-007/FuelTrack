@@ -120,6 +120,18 @@ foreach ($record1 as $key1) { ?>
                                 
                             </ul>
                         </li>
+                        
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                            <i class="fa-solid fa-user-group"></i> <span>Stock Update</span> <span
+                                    class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="add_employee.php">Add Stock</a></li>
+                                <li><a href="manage_employee.php">Manage Stock</a></li>
+                                <li><a href="manage_attendance.php">Attendance</a></li>
+                                
+                            </ul>
+                        </li>
                         <!-- changes till here s1 -->
 
                         <li class="has_sub">

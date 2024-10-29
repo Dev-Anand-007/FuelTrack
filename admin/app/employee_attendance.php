@@ -8,11 +8,9 @@ try {
 
     if (isset($_POST['submit'])) {
         $attendanceData = $_POST['attendance'];
+        $date = $_POST['attendanceDate']; // Get the selected date from the form
     
         foreach ($attendanceData as $employeeId => $status) {
-            // Insert or update attendance for each employee
-            $date = date('Y-m-d'); // Today's date
-    
             // Check if attendance already exists for this date and employee
             $stmt = $conn->prepare("SELECT id FROM attendance WHERE employee_id = ? AND date = ?");
             $stmt->execute([$employeeId, $date]);
@@ -27,6 +25,9 @@ try {
                 $stmt->execute([$employeeId, $date, $status]);
             }
         }
+    
+        
+    
     
         $_SESSION['success'] = "Attendance saved successfully!";
         header("Location: ../manage_attendance.php");
