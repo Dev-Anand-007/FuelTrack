@@ -1,9 +1,9 @@
 <?php
 session_start();
 include '../assets/constant/config.php';
- 
-  
-  
+
+
+
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -29,84 +29,145 @@ try {
     </div>
     <div class="container-fluid">
         <div class="row">
-        <!--   -->
+            <!--   -->
             <div class="col-lg-8" style="margin-left: 10%;">
                 <div class="card">
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active p-3" id="home" role="tabpanel">
-                                <form id="add_employee" method="POST" action="app/employee_crud.php">
+                                <form id="add_employee" method="POST" action="app/stock_crud.php">
                                     <div class="form-group">
                                         <div class="row">
-        <!--   -->
+                                            <!--   -->
                                             <label class="col-sm-3 control-label">Fuel Type</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="fuleType" name="fuleType">
-                                                    <option value="">~~SELECT~~</option>
-                                                    <option value="1">Petrol</option>
-                                                    <option value="2">Disel</option>
-                                                    <option value="3">Power</option>
+                                                <select class="form-control" id="fuelType" name="fuel_type">
+                                                    <option value="">~SELECT~</option>
+                                                    <?php
+                                                    try {
+                                                        // Prepare the statement
+                                                        $stmt = $conn->prepare("SELECT id,name FROM fuel_category WHERE delete_status = '0'");
+                                                        $stmt->execute();
+                                                        $records = $stmt->fetchAll();
+
+                                                        if (!empty($records)) {
+                                                            // Loop through each record and create options
+                                                            foreach ($records as $row) {
+                                                                ?>
+                                                                <option value="<?php echo htmlspecialchars($row['id']); ?>">
+                                                                    <?php echo htmlspecialchars($row['name']); ?>
+                                                                </option>
+                                                                <?php
+                                                            }
+                                                        } else {
+                                                            // Fallback option if no records are found
+                                                            echo "<option value=''>No options available</option>";
+                                                        }
+                                                    } catch (PDOException $e) {
+                                                        // Handle potential database errors
+                                                        echo "<option value=''>Error retrieving data</option>";
+                                                    }
+                                                    ?>
                                                 </select>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-        <!--   -->
-                                            <label class="col-sm-3 control-label">Volume</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="volume" placeholder="Volume" name="volume">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-        <!--   -->
-                                            <label class="col-sm-3 control-label">Invoice Number</label>
-                                            <div class="col-sm-9">
-                                                <input type="email" class="form-control" id="invoice" placeholder="Invoice number" name="invoice">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-        <!--   -->
-                                            <label class="col-sm-3 control-label">Vehicle Number</label>
-                                            <div class="col-sm-9">
-                                                <input type="tel" class="form-control" id="vehicle" placeholder="Vehicle number" name="vehicle">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-        <!--   -->
+                                            <!--   -->
                                             <label class="col-sm-3 control-label">Date</label>
                                             <div class="col-sm-9">
-                                                <input type="tel" class="form-control" id="date" placeholder="Date" name="date">
+                                                <input type="date" class="form-control" id="date" placeholder="Date"
+                                                    name="date">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-        <!--   -->
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">Morning Density</label>
+                                            <div class="col-sm-9">
+                                                <input type="number" step="0.01" class="form-control" id="density" placeholder="Density"
+                                                    name="morning_density">
+                                                <input type="number" step="0.01" class="form-control" id="temp" placeholder="Temperature"
+                                                    name="morning_temp">
+                                                <input type="number" step="0.01" class="form-control" id="observed" placeholder="Observed"
+                                                    name="morning_observed">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">Invoice Number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="invoice"
+                                                    placeholder="Invoice number" name="invoice_number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">Volume</label>
+                                            <div class="col-sm-9">
+                                                <input type="number" step="0.01" class="form-control" id="volume" placeholder="Volume"
+                                                    name="volume">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">Vehicle Number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="vehicle"
+                                                    placeholder="Vehicle number" name="vehicle_number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <!--   -->
                                             <label class="col-sm-3 control-label">Fuel Price</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" id="price" placeholder="Fuel Price" name="price"></textarea>
+                                                <input type="number" step="0.01" class="form-control" name="fuel_price" id="fuel_price" placeholder="Fuel price">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-        <!--   -->
-                                            <label class="col-sm-3 control-label">Fuel Density</label>
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">Truck Tank</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" id="density" placeholder="Fuel Density" name="density"></textarea>
+                                                <input type="number" step="0.01" class="form-control" id="density" placeholder="Density"
+                                                    name="truck_density">
+                                                <input type="number" step="0.01" class="form-control" id="temp" placeholder="Temperature"
+                                                    name="truck_temp">
+                                                <input type="number" step="0.01" class="form-control" id="observed" placeholder="Observed"
+                                                    name="truck_observed">
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <!--   -->
+                                            <label class="col-sm-3 control-label">After Decantation</label>
+                                            <div class="col-sm-9">
+                                                <input type="number" step="0.01" class="form-control" id="density" placeholder="Density"
+                                                    name="after_decantation_density">
+                                                <input type="number" step="0.01" class="form-control" id="temp" placeholder="Temperature"
+                                                    name="after_decantation_temp">
+                                                <input type="number" step="0.01" class="form-control" id="observed" placeholder="Observed"
+                                                    name="after_decantation_observed">
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group col-md-12">
-                                        <button class="btn btn-primary" type="submit" name="submit" onclick="">Submit</button>
+                                        <button class="btn btn-primary" type="submit" name="submit"
+                                            onclick="">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -123,17 +184,17 @@ try {
 <script>
     function validateemployee() {
         // Custom method to check if the input contains only spaces
-        $.validator.addMethod("noSpacesOnly", function(value, element) {
+        $.validator.addMethod("noSpacesOnly", function (value, element) {
             return value.trim() !== '';
         }, "Please enter a non-empty value");
 
         // Custom method to check if the input contains only alphabet characters
-        $.validator.addMethod("lettersonly", function(value, element) {
+        $.validator.addMethod("lettersonly", function (value, element) {
             return /^[a-zA-Z\s]*$/.test(value);
         }, "Please enter alphabet characters only");
 
         // Custom method to check if the input contains only digits
-        $.validator.addMethod("noDigits", function(value, element) {
+        $.validator.addMethod("noDigits", function (value, element) {
             return !/\d/.test(value);
         }, "Please enter a value without digits");
 
@@ -194,5 +255,5 @@ try {
                 }
             }
         });
-}
+    }
 </script>

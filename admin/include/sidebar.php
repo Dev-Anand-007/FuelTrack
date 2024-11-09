@@ -127,8 +127,8 @@ foreach ($record1 as $key1) { ?>
                                     class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="add_stock.php">Add Stock</a></li>
-                                <li><a href="manage_employee.php">Manage Stock</a></li>
-                                <li><a href="manage_attendance.php">Attendance</a></li>
+                                <li><a href="manage_stock.php">Manage Stock</a></li>
+                                <!-- <li><a href="manage_attendance.php">Attendance</a></li> -->
                                 
                             </ul>
                         </li>
