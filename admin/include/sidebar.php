@@ -136,6 +136,16 @@ foreach ($record1 as $key1) { ?>
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect">
+                            <i class='fas fa-gas-pump' style='font-size:22px'></i> <span>DIP</span> <span
+                                    class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="add_dip.php">Add Dip</a></li>
+                                <li><a href="manage_dip.php">Manage Dip</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
                                 <i class="fas fa-truck-arrow-right"></i> <span>Supplier</span> <span
                                     class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
