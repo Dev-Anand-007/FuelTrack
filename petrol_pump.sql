@@ -639,3 +639,22 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `cash_submission` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `date` DATE NOT NULL,
+    `fueltype` INT NOT NULL,
+    `employeeName` INT NOT NULL,
+    `opening_read` DECIMAL(10,2) NOT NULL,
+    `closing_read` DECIMAL(10,2) NOT NULL,
+    `fuelPrice` DECIMAL(10,2) NOT NULL,
+    `ActualAmount` DECIMAL(10,2) NOT NULL,
+    `AmountSubmitted` DECIMAL(10,2) NOT NULL,
+    `ExtraShort` DECIMAL(10,2) DEFAULT 0.00,
+    `delete_status` TINYINT(1) DEFAULT 0,
+    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`fueltype`) REFERENCES `fuel_category`(`id`),
+    FOREIGN KEY (`employeeName`) REFERENCES `employee`(`id`)
+);
+
