@@ -60,42 +60,25 @@ try {
                                                 <!--   -->
                                                 <label class="col-sm-3 control-label">Fuel Type</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control" id="fuelType" name="fuel_type">
-                                                        <option value=""><?php
-                                                        try {
-                                                            $stmt = $conn->prepare("SELECT name FROM fuel_category WHERE id = :fuel_type");
-                                                            $stmt->bindParam(':fuel_type', $key['fuel_type'], PDO::PARAM_INT);
-                                                            $stmt->execute();
-                                                            $records = $stmt->fetch();
-                                                            echo htmlspecialchars($records['name'] ?? 'No fuel type was entered');
-                                                        } catch (PDOException $e) {
-                                                            // Handle potential database errors
-                                                            echo "<option value=''>Error retrieving data</option>";
-                                                        }
-                                                        ?></option>
+                                                    <select class="form-control" id="fuel_type" name="fuel_type">
+                                                        <option value="">SELECT</option>
                                                         <?php
-                                                        try {
-                                                            // Prepare the statement
-                                                            $stmt = $conn->prepare("SELECT id,name FROM fuel_category WHERE delete_status = '0'");
-                                                            $stmt->execute();
-                                                            $records = $stmt->fetchAll();
+                                                        $stmt = $conn->prepare("SELECT id, name FROM fuel_category WHERE delete_status='0'");
+                                                        $stmt->execute();
+                                                        $records = $stmt->fetchAll();
 
-                                                            if (!empty($records)) {
-                                                                // Loop through each record and create options
-                                                                foreach ($records as $row) {
-                                                                    ?>
-                                                                    <option value="<?php echo htmlspecialchars($row['id']); ?>">
-                                                                        <?php echo htmlspecialchars($row['name']); ?>
-                                                                    </option>
-                                                                    <?php
-                                                                }
-                                                            } else {
-                                                                // Fallback option if no records are found
-                                                                echo "<option value=''>No options available</option>";
+                                                        if (!empty($records)) { // Check if there are records
+                                                            foreach ($records as $row) {
+                                                                // Check if this option should be selected
+                                                                $selected = ($row['id'] == $key['fuel_type']) ? 'selected="selected"' : '';
+                                                                ?>
+                                                                <option value="<?php echo $row['id']; ?>" <?php echo $selected; ?>>
+                                                                    <?php echo $row['name']; ?>
+                                                                </option>
+                                                                <?php
                                                             }
-                                                        } catch (PDOException $e) {
-                                                            // Handle potential database errors
-                                                            echo "<option value=''>Error retrieving data</option>";
+                                                        } else { // If no records are found
+                                                            echo "<option value=''>No options available</option>";
                                                         }
                                                         ?>
                                                     </select>

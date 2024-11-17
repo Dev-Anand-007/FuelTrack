@@ -66,6 +66,7 @@ try {
                     <th>After decantation density</th>
                     <th>After decantation temperature</th>
                     <th>After decantation observed</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
