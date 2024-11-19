@@ -165,10 +165,7 @@ try {
 </div>
 <!--end row-->
 
-<span style="color:red;">
-   <center><strong>Low on <span style="color: blue"><a href="" target="_blank">Petrol</a></span> | Order Now </strong>
-   </center>
-</span>
+
 <div class="chart">
    <div class="row">
       <!--   -->
