@@ -635,7 +635,19 @@ ALTER TABLE `tbl_invoice`
 ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
 COMMIT;
+---------------------------------------------------------------------------------------------------------------------------------
+-- creating table on fuel density
+CREATE TABLE dip_density(
+    id SERIAL PRIMARY KEY,        
+    record_date DATE NOT NULL,     
+    fuel_type INT NOT NULL,        
+    dip DECIMAL(10, 2) NOT NULL,   
+    density_hydro DECIMAL(5, 3),   
+    density_temp DECIMAL(5, 3),    
+    density_value DECIMAL(5, 3)    
+);
 
+--------------------------------------------------------------------------------------------------------------------------------
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
