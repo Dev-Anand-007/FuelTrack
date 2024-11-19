@@ -45,23 +45,10 @@ $stmt = $conn->prepare("SELECT * FROM `login` ");
                     <div class="topbar">
 
                         <nav class="navbar-custom"><div class="marquee-container" style="margin-top: 20px;" onmouseover="stopMarquee(this)" onmouseout="startMarquee(this)">
-  <div class="marquee-content">
-    <span style="color: red;"><center><strong><b>Alert : This can be used for Showing something</b></strong></center></span>
-  </div>
+  
 </div>
 
 
-<script>
-  function stopMarquee(element) {
-    var marqueeContent = element.querySelector('.marquee-content');
-    marqueeContent.style.animationPlayState = 'paused';
-  }
-
-  function startMarquee(element) {
-    var marqueeContent = element.querySelector('.marquee-content');
-    marqueeContent.style.animationPlayState = 'running';
-  }
-</script>
                             <ul class="list-inline menu-left float-left mb-0">
                                 <li class="float-left">
                                     <button class="button-menu-mobile open-left waves-light waves-effect">
@@ -74,14 +61,7 @@ $stmt = $conn->prepare("SELECT * FROM `login` ");
                             </ul>
                           
                             <ul class="list-inline float-right mb-0">
-                                <!-- language-->
-                                     
-                                    <li  class="list-inline-item google-multi languge-list">
-                                        <div id="google_translate_element">
-                                            
-                                        </div>
-                                    </li>
-                                <!-- language-->
+                               
                                 
                                 <li class="list-inline-item dropdown notification-list">
                                     <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"

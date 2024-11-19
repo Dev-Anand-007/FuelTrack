@@ -126,7 +126,7 @@ foreach ($record1 as $key1) { ?>
                                     class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="cash_submission.php">Cash Submission</a></li>
-                                <li><a href="manage_account.php">Manage Account</a></li>
+                                <li><a href="manage_account.php">Manage AccountFE</a></li>
                                
                                 
                             </ul>
