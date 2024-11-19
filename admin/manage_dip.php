@@ -50,53 +50,53 @@ try {
                 style="border-collapse: collapse; border-spacing: 0; width: 100%;" enctype="multipart/form-data">
                 <thead>
                   <tr>
-                  <th>Serial</th>
+                    <th>Serial</th>
                     <th>Date</th>
-                    <th>Fuel_Type</th>
+                    <th>Fuel Type</th>
                     <th>Dip</th>
                     <th>Density_hydro</th>
                     <th>Density_temp</th>
                     <th>Density_value</th>
-                     <th>Action</th> 
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                   <?php
-                  $stmt = $conn->prepare("SELECT * FROM `dip_density` WHERE delete_status='0'");
+                  <?php
+                  $stmt = $conn->prepare("
+    SELECT dd.*, fc.name AS fuel_type_name 
+    FROM `dip_density` dd 
+    JOIN `fuel_category` fc ON dd.fuel_type = fc.id 
+    WHERE dd.delete_status='0'
+");
                   $stmt->execute();
                   $record = $stmt->fetchAll();
                   $i = 1;
                   foreach ($record as $key) { ?>
 
-
                     <tr>
-
-                       <td><?php echo $i; ?></td>
+                      <td><?php echo $i; ?></td>
                       <td><?php echo $key['record_date']; ?></td>
-                      <td><?php echo $key['fuel_type']; ?></td>
+                      <td><?php echo $key['fuel_type_name']; ?></td> <!-- Updated to show the fuel type name -->
                       <td><?php echo $key['dip']; ?></td>
                       <td><?php echo $key['density_hydro']; ?></td>
                       <td><?php echo $key['density_temp']; ?></td>
-                      <td><?php echo $key['density_value']; ?></td> 
+                      <td><?php echo $key['density_value']; ?></td>
 
                       <td>
                         <a href="#" onclick="editForm(event, 
-                         <?php echo $key['id'];?>,'edit_dip.php')"
-                          class="btn btn-primary waves-effect waves-light"><i class="fa fa-edit" aria-hidden="true"></i>
-
-                        </a> 
-
+             <?php echo $key['id']; ?>,'edit_dip.php')" class="btn btn-primary waves-effect waves-light">
+                          <i class="fa fa-edit" aria-hidden="true"></i>
+                        </a>
 
                         <a href="#" class="btn btn-danger"
-                          onclick="return confirm('Are you sure you want to delete this item?') && delForm(event, <?php echo $key['id']; ?>,'app/dip_crud.php' );"><i
-                            class="fa fa-trash-alt" aria-hidden="true"></i></a>
-
-
-
+                          onclick="return confirm('Are you sure you want to delete this item?') && delForm(event, <?php echo $key['id']; ?>,'app/dip_crud.php');">
+                          <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                        </a>
                       </td>
                     </tr>
                     <?php $i++;
                   } ?>
+
 
               </table>
             </div><!--end /tableresponsive-->
