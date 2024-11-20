@@ -54,7 +54,7 @@ foreach ($record1 as $key1) {
 
 
                     <div class="text-center front-logo">
-                        <a href="index.php" class="logo logo-admin"><img src="assets/images/<?php echo $key1['photo1']; ?>" alt="logo" width="330px"></a>
+                        <a href="login.php" class="logo logo-admin"><img src="assets/images/<?php echo $key1['photo1']; ?>" alt="logo" width="330px"></a>
                     </div>
 
                     <div class="">
@@ -72,16 +72,10 @@ foreach ($record1 as $key1) {
                                 <input class="form-control" type="password" name="password" required="" placeholder="Password" id="password-field">
 
                             </div>
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                </div>
-
-                            </div>
-                            <div>
+                           
+                            <!-- <div>
                                 <div class="g-recaptcha" data-sitekey="<?php echo $key1['sitekey'] ?>"></div><?php } ?>
-                            </div>
+                            </div> -->
                             <div class="form-group row">
                                 <div class="col-12">
 

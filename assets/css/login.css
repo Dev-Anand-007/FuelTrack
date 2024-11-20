@@ -79,7 +79,7 @@ body{
     flex-direction: column; 
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     font-size: 2em;
   }
   
@@ -98,6 +98,7 @@ body{
   .about{
     color: rgb(73, 230, 73);
     background-color: gainsboro;
+    text-align: center;
     padding:70px 140px 70px 140px;
   }
   .about_content{

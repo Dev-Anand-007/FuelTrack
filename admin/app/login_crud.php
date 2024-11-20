@@ -81,7 +81,7 @@ $passw=hash('sha256', $_POST['password']);
             {
      echo '<script>
   alert("Wrong Password or Email");
-  window.location.href = "../../index.php";
+  window.location.href = "../../login.php";
 </script>';
               
 
@@ -92,7 +92,7 @@ $passw=hash('sha256', $_POST['password']);
 //                     {
 //   echo '<script>
 //   alert("Please Fill the Captcha");
-//   window.location.href = "../../index.php";
+//   window.location.href = "../../login.php";
 // </script>';
 //     }
 
