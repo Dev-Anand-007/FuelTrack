@@ -161,10 +161,10 @@ foreach ($record as $key) {
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?php
-                                $stmt3 = $conn->prepare("SELECT * FROM `fuel_tbl` where delete_status='0' AND id=? ");
+                                $stmt3 = $conn->prepare("SELECT name FROM `fuel_category`  WHERE id = ? ");
                                 $stmt3->execute([$key2['product_id']]);
                                 $record3 = $stmt3->fetch();
-                                echo $record3['fuelName'];
+                                echo $record3['name'];
                                 ?></td>
                             <td><?php echo $key2['quantity'] ?></td>
                             <td><?php echo $key2['rate'] ?></td>

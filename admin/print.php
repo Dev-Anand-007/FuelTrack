@@ -1,9 +1,9 @@
 <?php
 session_start();
 include '../assets/constant/config.php';
- 
-  
-  
+
+
+
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -32,7 +32,7 @@ $record = $statement->fetchAll();
 foreach ($record as $key) {
 
 
-?>
+    ?>
 
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
@@ -40,7 +40,7 @@ foreach ($record as $key) {
         <div class="dashboard-ecommerce">
             <div class="container-fluid dashboard-content" style="background-color: #ffffff;">
                 <div class="row">
-        <!--   -->
+                    <!--   -->
                     <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
                             <div class="card-header p-4">
@@ -50,7 +50,8 @@ foreach ($record as $key) {
                                 $record2 = $stmt2->fetchAll();
                                 foreach ($record2 as $key2) { ?>
                                     <div class="float-left">
-                                        <img src="../assets/images/<?php echo $key2['photo1'] ?>" class="img-responsive" style="width: 300px;">
+                                        <img src="../assets/images/<?php echo $key2['photo1'] ?>" class="img-responsive"
+                                            style="width: 300px;">
                                     </div>
                                 <?php } ?>
                                 <div class="mr-5 text-center">
@@ -74,11 +75,11 @@ foreach ($record as $key) {
                                     <div class="col-sm-6">
                                         <h5 class="mb-3">To:</h5>
                                         <h3 class="text-dark mb-1"><?php
-                                                                    $stmt2 = $conn->prepare("SELECT * FROM `customer` WHERE delete_status='0' AND id=? ");
-                                                                    $stmt2->execute([$key['customer_id']]);
-                                                                    $record2 = $stmt2->fetch();
-                                                                    echo $record2['brandName'];
-                                                                    ?></h3>
+                                        $stmt2 = $conn->prepare("SELECT * FROM `customer` WHERE delete_status='0' AND id=? ");
+                                        $stmt2->execute([$key['customer_id']]);
+                                        $record2 = $stmt2->fetch();
+                                        echo $record2['brandName'];
+                                        ?></h3>
                                         <div><?php echo $key['customerAddress'] ?></div>
                                         <div>Email: <?php echo $key['customerEmail'] ?></div>
                                         <div>Phone: <?php echo $key['customerPhone'] ?></div>
@@ -105,22 +106,23 @@ foreach ($record as $key) {
                                                 <tr>
                                                     <td class="center"><?php echo $i; ?></td>
                                                     <td class="left strong"><?php
-                                                                            $stmt3 = $conn->prepare("SELECT * FROM `fuel_tbl` where delete_status='0' AND id=? ");
-                                                                            $stmt3->execute([$key2['product_id']]);
-                                                                            $record3 = $stmt3->fetch();
-                                                                            echo $record3['fuelName'];
-                                                                            ?></td>
+                                                    $stmt3 = $conn->prepare("SELECT name FROM `fuel_category`  WHERE id = ?");
+                                                    $stmt3->execute([$key2['product_id']]);
+                                                    $record3 = $stmt3->fetch();
+                                                    echo $record3['name'];
+                                                    // echo $key2['product_id'];
+                                                    ?></td>
                                                     <td class="right"><?php echo $key2['quantity'] ?></td>
                                                     <td class="center"><?php echo $key2['rate'] ?></td>
                                                     <td class="right"><?php echo $key2['total'] ?></td>
                                                 </tr>
-                                            <?php $i++;
+                                                <?php $i++;
                                             } ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="row">
-        <!--   -->
+                                    <!--   -->
                                     <div class="col-lg-4 col-sm-5">
                                     </div>
                                     <div class="col-lg-4 col-sm-5 ml-auto">

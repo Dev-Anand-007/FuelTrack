@@ -1,9 +1,9 @@
 <?php
 session_start();
 include '../assets/constant/config.php';
- 
-  
-  
+
+
+
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -37,7 +37,7 @@ try {
 
   <div class="container-fluid">
     <div class="row">
-        <!--   -->
+      <!--   -->
       <div class="col-lg-11" style="margin-left: 10%;">
         <div class="card">
           <div class="card-body">
@@ -72,7 +72,8 @@ try {
                     <div class="form-group row col-md-6">
                       <label class="col-sm-3 control-label"> Date</label>
                       <div class="col-sm-9">
-                        <input type="date" name="build_date" class="form-control " value="<?php echo $current_date; ?>" data-provide="datepicker">
+                        <input type="date" name="build_date" class="form-control " value="<?php echo $current_date; ?>"
+                          data-provide="datepicker">
                       </div>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -80,7 +81,9 @@ try {
                     <div class="form-group row col-md-6">
                       <label class="col-sm-3 control-label">Customer No: </label>
                       <div class="col-sm-9">
-                        <input type="text" name="customerPhone" class="form-control " placeholder="Customer No" id="customerPhone" minlength="1" maxlength="10" pattern="^[0][1-9]\d{9}$|^[1-9]\d{9}$" required title="Enter Valid Mobile No">
+                        <input type="text" name="customerPhone" class="form-control " placeholder="Customer No"
+                          id="customerPhone" minlength="1" maxlength="10" pattern="^[0][1-9]\d{9}$|^[1-9]\d{9}$"
+                          required title="Enter Valid Mobile No">
 
 
                       </div>
@@ -108,14 +111,16 @@ try {
                     <div class="form-group row col-md-6">
                       <label class="col-sm-3 control-label">Customer Email: </label>
                       <div class="col-sm-9">
-                        <input type="email" name="customerEmail" class="form-control " placeholder="Customer Email" id="customerEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                        <input type="email" name="customerEmail" class="form-control " placeholder="Customer Email"
+                          id="customerEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 
                       </div>
                     </div>&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="form-group row col-md-6">
                       <label class="col-sm-3 control-label"> Address:</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" required name="customerAddress" id="customerAddress" style="height:70px;" placeholder="Customer Address"></textarea>
+                        <textarea class="form-control" required name="customerAddress" id="customerAddress"
+                          style="height:70px;" placeholder="Customer Address"></textarea>
                       </div>
                     </div>
 
@@ -153,26 +158,31 @@ try {
                           <select name="product_id[]" class="form-control product_id " required>
                             <option value="">--Select Service--</option>
                             <?php
-                            $sql = "SELECT * FROM fuel_tbl where delete_status='0' order by id desc";
+                            $sql = "SELECT * FROM fuel_category WHERE delete_status='0' ORDER BY id DESC";
                             $statement = $conn->prepare($sql);
                             $statement->execute();
                             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
-                              <option value="<?php echo $row['id']; ?>"><?php echo $row['fuelName']; ?></option>
+                              <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
                             <?php } ?>
+
                           </select>
                         </div>
                       </div>
 
                       <div class="col-sm-1">
-                        <input type="text" class="form-control" id="quantity1" name="quantity[]" placeholder="Qty" required onblur="GFG_Fun();" pattern="^[0-9]+$" max="">
-                        <input type="hidden" class="form-control" id="aquantity" name="aquantity[]" placeholder="Qty" onblur="GFG_Fun();" pattern="^[0-9]+$" readonly="">
+                        <input type="text" class="form-control" id="quantity1" name="quantity[]" placeholder="Qty"
+                          required onblur="GFG_Fun();" pattern="^[0-9]+$" max="">
+                        <input type="hidden" class="form-control" id="aquantity" name="aquantity[]" placeholder="Qty"
+                          onblur="GFG_Fun();" pattern="^[0-9]+$" readonly="">
                       </div>
 
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="rate" name="rate[]" placeholder="Sale Price" required>
+                        <input type="text" class="form-control" id="rate" name="rate[]" placeholder="Sale Price"
+                          required>
                       </div>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control total" id="total" name="total[]" placeholder="Total" readonly="">
+                        <input type="text" class="form-control total" id="total" name="total[]" placeholder="Total"
+                          readonly="">
                       </div>
 
                       <div class="col-sm-2">
@@ -191,19 +201,22 @@ try {
                           <select name="product_id[]" class="form-control product_id ">
                             <option value="">--Select Service--</option>
                             <?php
-                            $sql = "SELECT * FROM fuel_tbl where delete_status='0' order by id desc";
+                            $sql = "SELECT * FROM fuel_category WHERE delete_status='0' ORDER BY id DESC";
                             $statement = $conn->prepare($sql);
                             $statement->execute();
                             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) { ?>
-                              <option value="<?php echo $row['id']; ?>"><?php echo $row['fuelName']; ?></option>
+                              <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
                             <?php } ?>
+
                           </select>
                         </div>
                       </div>
 
                       <div class="col-sm-1">
-                        <input type="text" class="form-control" id="quantity" name="quantity[]" placeholder="Qty" pattern="^[0-9]+$" max="">
-                        <input type="hidden" class="form-control" id="aquantity" name="aquantity[]" placeholder="Qty" pattern="^[0-9]+$" readonly="">
+                        <input type="text" class="form-control" id="quantity" name="quantity[]" placeholder="Qty"
+                          pattern="^[0-9]+$" max="">
+                        <input type="hidden" class="form-control" id="aquantity" name="aquantity[]" placeholder="Qty"
+                          pattern="^[0-9]+$" readonly="">
 
                       </div>
 
@@ -211,7 +224,8 @@ try {
                         <input type="text" class="form-control" id="rate" name="rate[]" placeholder="Sale Price">
                       </div>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control total" id="total" name="total[]" placeholder="Total" readonly="">
+                        <input type="text" class="form-control total" id="total" name="total[]" placeholder="Total"
+                          readonly="">
                       </div>
                       <div class="col-sm-2">
                         <button class="btn btn-danger remove" type="button"><i class="fa fa-minus"></i></button>
@@ -222,25 +236,30 @@ try {
                   <div class="form-group row control-group">
                     <label class="col-sm-6 control-label">GST %</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" id="gst_rate" name="gst_rate" placeholder="GST %" value="0" min="0" max="99">
+                      <input type="text" class="form-control" id="gst_rate" name="gst_rate" placeholder="GST %"
+                        value="0" min="0" max="99">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-6 control-label">Discount</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount %" value="0" min="0" max="100">
+                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount %"
+                        value="0" min="0" max="100">
                     </div>
                   </div>
-                  <input type="hidden" name="subtotal" id="subtotal" class="form-control" placeholder="Subtotal" readonly="">
+                  <input type="hidden" name="subtotal" id="subtotal" class="form-control" placeholder="Subtotal"
+                    readonly="">
 
                   <div class="form-group row">
                     <label class="col-sm-6 control-label"> Final Total</label>
                     <div class="col-sm-3">
-                      <input type="text" name="final_total" id="final_total" class="form-control" placeholder="Total" readonly="">
+                      <input type="text" name="final_total" id="final_total" class="form-control" placeholder="Total"
+                        readonly="">
                     </div>
                   </div>
 
-                  <button type="submit" name="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" id="submit_check">Submit</button>
+                  <button type="submit" name="submit" class="btn btn-primary btn-flat m-b-30 m-t-30"
+                    id="submit_check">Submit</button>
                   <p id="GFG_DOWN" style="color: green;">
                 </form>
 
@@ -266,7 +285,7 @@ try {
 
 
 <script type="text/javascript">
-  $(".add-more").on('click', function() {
+  $(".add-more").on('click', function () {
 
     var html = $(".copy").html();
     $(".after-add-more").after(html);
@@ -274,14 +293,14 @@ try {
     show_no();
   });
 
-  $("body").on("click", ".remove", function() {
+  $("body").on("click", ".remove", function () {
     $(this).parents(".control-group").remove();
     show_no();
   });
 
   function show_no() {
     var row_cnt = 0;
-    $(".sr_no").each(function() {
+    $(".sr_no").each(function () {
       row_cnt++;
       $(this).html(row_cnt);
     });
@@ -292,8 +311,8 @@ try {
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('div.mydiv').on("keyup", 'input[name^="rate"]', function(event) {
+  $(document).ready(function () {
+    $('div.mydiv').on("keyup", 'input[name^="rate"]', function (event) {
       var currentRow = $(this).closest('.subdiv');
       var quantity = currentRow.find('input[name^="quantity"]').val();
       var x = parseInt(quantity);
@@ -315,7 +334,7 @@ try {
       var total = +currentRow.find('input[name^="total"]').val();
       // $('#subtotal').val(total);
       var sum = 0;
-      $('.total').each(function() {
+      $('.total').each(function () {
         sum += Number($(this).val());
       });
       $('#subtotal').val(sum);
@@ -326,18 +345,18 @@ try {
       $("#final_total").val(sub_total);
 
       var tot_commi = 0;
-      $('.tax_amount').each(function() {
+      $('.tax_amount').each(function () {
         tot_commi += Number($(this).val());
       });
       $('#total_tax_amount').val(tot_commi);
       var tot_commi = 0;
-      $('.taxable_amount').each(function() {
+      $('.taxable_amount').each(function () {
         tot_commi += Number($(this).val());
       });
       $('#total_taxable_amount').val(tot_commi);
     });
     var tot_commi = 0;
-    $('.taxable_amount').each(function() {
+    $('.taxable_amount').each(function () {
       tot_commi += Number($(this).val());
     });
     $('#total_taxable_amount').val(tot_commi);
@@ -345,7 +364,7 @@ try {
 
 
   //customer add start cust_no  cust_email  address
-  $('div.abc').on("change", 'select[id^="cust_name"]', function(event) {
+  $('div.abc').on("change", 'select[id^="cust_name"]', function (event) {
     var cust_name = $(this).val();
 
     $.ajax({
@@ -355,7 +374,7 @@ try {
       data: {
         cust_name: cust_name
       },
-      success: function(data) {
+      success: function (data) {
         for (var i = 0; i < data['cust'].length; i++) {
           var customerPhone = data['cust'][i]['customerPhone'];
           var customerEmail = data['cust'][i]['customerEmail'];
@@ -370,7 +389,7 @@ try {
   });
   //customer add end
 
-  $('div.mydiv').on("keyup", 'input[name^="quantity"]', function(event) {
+  $('div.mydiv').on("keyup", 'input[name^="quantity"]', function (event) {
     var currentRow = $(this).closest('.subdiv');
     var quantity = currentRow.find('input[name^="quantity"]').val();
     var x = parseInt(quantity);
@@ -393,7 +412,7 @@ try {
     var total = +currentRow.find('input[name^="total"]').val();
     // $('#subtotal').val(total);
     var sum = 0;
-    $('.total').each(function() {
+    $('.total').each(function () {
       sum += Number($(this).val());
     });
     $('#subtotal').val(sum);
@@ -404,19 +423,19 @@ try {
     $("#final_total").val(sub_total);
 
     var tot_commi = 0;
-    $('.tax_amount').each(function() {
+    $('.tax_amount').each(function () {
       tot_commi += Number($(this).val());
     });
     $('#total_tax_amount').val(tot_commi);
     var tot_commi = 0;
-    $('.taxable_amount').each(function() {
+    $('.taxable_amount').each(function () {
       tot_commi += Number($(this).val());
     });
     $('#total_taxable_amount').val(tot_commi);
 
   });
 
-  $('div.mydiv').on("keyup", 'input[name^="gst"]', function(event) {
+  $('div.mydiv').on("keyup", 'input[name^="gst"]', function (event) {
     var currentRow = $(this).closest('.subdiv');
     var quantity = currentRow.find('input[name^="quantity"]').val();
     var sale_price = currentRow.find('input[name^="sale_price"]').val();
@@ -439,7 +458,7 @@ try {
     var total = +currentRow.find('input[name^="total"]').val();
     // $('#subtotal').val(total);
     var sum = 0;
-    $('.total').each(function() {
+    $('.total').each(function () {
       sum += Number($(this).val());
     });
     $('#subtotal').val(sum);
@@ -450,18 +469,18 @@ try {
     $("#final_total").val(sub_total);
 
     var tot_commi = 0;
-    $('.tax_amount').each(function() {
+    $('.tax_amount').each(function () {
       tot_commi += Number($(this).val());
     });
     $('#total_tax_amount').val(tot_commi);
     var tot_commi = 0;
-    $('.taxable_amount').each(function() {
+    $('.taxable_amount').each(function () {
       tot_commi += Number($(this).val());
     });
     $('#total_taxable_amount').val(tot_commi);
   });
 
-  $('form').on("keyup", 'input[name="discount"]', function(argument) {
+  $('form').on("keyup", 'input[name="discount"]', function (argument) {
 
     var disc = $(this).val();
     var sub_text = $('#subtotal').val();
@@ -480,7 +499,7 @@ try {
     $("#final_total").val(sub_total1);
   });
 
-  $('form').on("keyup", 'input[name="gst_rate"]', function(argument) {
+  $('form').on("keyup", 'input[name="gst_rate"]', function (argument) {
     var tax_percent = $(this).val();
     var sub_text = $('#subtotal').val();
 
@@ -499,10 +518,10 @@ try {
   });
 
 
-  $('div.mydiv').on("change", 'select[name^="product_id"]', function(event) {
+  $('div.mydiv').on("change", 'select[name^="product_id"]', function (event) {
     var drop_services = $(this).val();
     var cnt = 0;
-    $(".product_id").each(function() {
+    $(".product_id").each(function () {
       if (drop_services == $(this).val()) {
         cnt++;
       }
@@ -521,7 +540,7 @@ try {
       data: {
         drop_services: drop_services
       },
-      success: function(data) {
+      success: function (data) {
         //currentRow.find('input[name^="quantity"]').val(1);
         currentRow.find('input[name^="aquantity"]').val(data['product']['openning_stock']);
 
@@ -542,7 +561,7 @@ try {
         //var total=+currentRow.find('input[name^="total"]').val(total);
         // $('#subtotal').val(total);
         var sum = 0;
-        $('.total').each(function() {
+        $('.total').each(function () {
           if ($(this).val() != '') {
             sum += parseInt($(this).val());
           }
@@ -553,12 +572,12 @@ try {
         var fsub = $('#final_total').val(sum);
 
         var tot_commi = 0;
-        $('.tax_amount').each(function() {
+        $('.tax_amount').each(function () {
           tot_commi += Number($(this).val());
         });
         $('#total_tax_amount').val(tot_commi);
         var tot_commi = 0;
-        $('.taxable_amount').each(function() {
+        $('.taxable_amount').each(function () {
           tot_commi += Number($(this).val());
         });
         $('#total_taxable_amount').val(tot_commi);
@@ -567,7 +586,7 @@ try {
 
   });
 
-  $('div.mydiv').on("change", 'select[name^="p_group_name"]', function(event) {
+  $('div.mydiv').on("change", 'select[name^="p_group_name"]', function (event) {
     var currentRow = $(this).closest('.subdiv');
     //console.log(currentRow);
     var group_id = $(this).val();
@@ -580,7 +599,7 @@ try {
       data: {
         group_id: group_id
       },
-      success: function(data) {
+      success: function (data) {
         for (var i = 0; i < data['products'].length; i++) {
           var p_id = data['products'][i][0];
           var p_name = data['products'][i][2];
@@ -591,7 +610,7 @@ try {
   });
 </script>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     $(".select2").select2();
   });
 </script>
@@ -607,8 +626,8 @@ try {
 
     //   alert("OUT OF STOCK");
     // }
-    $(document).ready(function() {
-      $('#quantity1').on('keydown keyup change', function() {
+    $(document).ready(function () {
+      $('#quantity1').on('keydown keyup change', function () {
         var char = $(this).val();
         var charLength = $(this).val().length;
         // alert(char);
