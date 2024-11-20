@@ -133,7 +133,7 @@ foreach ($record as $key) {
                 <h3><?php echo $key['inv_no'] ?></h3>
             </div>
             <div class="address">
-                <p><strong>From:</strong> <?php echo $result['username'] ?><br>Email: <?php echo $result['email'] ?><br>Phone: <?php echo $result['mobileno'] ?></p>
+                <p><strong>From :</strong> <?php echo $result['username'] ?><br>Email: <?php echo $result['email'] ?><br>Phone: <?php echo $result['mobileno'] ?></p>
                 <p><strong>To:</strong> <?php
                                         $stmt2 = $conn->prepare("SELECT * FROM `customer` WHERE delete_status='0' AND id=? ");
                                         $stmt2->execute([$key['customer_id']]);

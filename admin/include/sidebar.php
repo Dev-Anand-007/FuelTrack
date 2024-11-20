@@ -126,7 +126,7 @@ foreach ($record1 as $key1) { ?>
                                     class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="cash_submission.php">Cash Submission</a></li>
-                                <li><a href="manage_account.php">Manage AccountFE</a></li>
+                                <li><a href="manage_account.php">Manage Account</a></li>
                                
                                 
                             </ul>
@@ -147,12 +147,11 @@ foreach ($record1 as $key1) { ?>
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect">
-                                <i class="fas fa-truck-arrow-right"></i> <span>Supplier</span> <span
+                                <i class="fas fa-warehouse" ></i> <span>Stock</span> <span
                                     class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="add_supplier.php">Add Supplier</a></li>
-                                <li><a href="manage_supplier.php">Manage Supplier</a></li>
-                                <li><a href="import_supplier.php">Import Supplier</a></li>
+                                <li><a href="show_stock.php">Show Stock</a></li>
+                                
                             </ul>
                         </li>
                         <!--       -->

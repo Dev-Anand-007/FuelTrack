@@ -1,9 +1,9 @@
 <?php
 session_start();
 include '../assets/constant/config.php';
- 
-  
-  
+
+
+
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -37,7 +37,7 @@ try {
 
   <div class="container-fluid">
     <div class="row">
-        <!--   -->
+      <!--   -->
       <div class="col-lg-10" style="margin-left: 10%;">
         <div class="card">
           <div class="card-body">
@@ -51,88 +51,74 @@ try {
                   $stmt->execute();
                   $record = $stmt->fetchAll();
                   foreach ($record as $key) {
-                  ?>
+                    ?>
 
                     <input class="form-control" type="hidden" name="id" value="<?php echo $key['id']; ?>">
 
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Fuel Name</label>
-                      <input type="text" class="form-control" id="fuelName" name="fuelName" value="<?php echo $key['fuelName'] ?>">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Number of Liters</label>
-                      <input type="text" class="form-control" id="openning_stock" name="openning_stock" value="<?php echo $key['openning_stock'] ?>">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Rate</label>
-                      <input type="text" class="form-control" id="rate" name="rate" value="<?php echo $key['rate'] ?>">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Unit Price</label>
-                      <input type="text" class="form-control" id="unit_price" name="unit_price" value="<?php echo $key['unit_price'] ?>">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Batch No</label>
-                      <input type="text" class="form-control" id="bno" name="bno" value="<?php echo $key['bno'] ?>">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Expiry Date</label>
-                      <input type="date" class="form-control" id="expdate" name="expdate" value="<?php echo $key['expdate'] ?>">
-                    </div>
-
-                    <!-- <div class="form-group col-md-6">
-                      <label class="control-label">Formula</label>
-                      <select class="form-control" id="formula" name="formula">
-                        <option value="">~~SELECT~~</option>
-                        <option value="1">Available</option>
-                        <option value="2">Not Available</option>
-                      </select>
-                    </div> -->
-
-                    <div class="form-group col-md-6">
-                      <label class="control-label">Supplier Name</label>
-                      <select class="form-control" id="supplierName" name="supplierName">
-                        <option value="">~~SELECT~~</option>
-                        <?php
-                        $stmt2 = $conn->prepare("SELECT * FROM `supplier` WHERE delete_status='0' ");
-                        $stmt2->execute();
-                        $record2 = $stmt2->fetchAll();
-                        foreach ($record2 as $key2) {
-                        ?>
-                          <option value="<?php echo $key2['id'] ?>" <?php if ($key['supplierName'] == $key2['id']) echo 'selected'; ?>><?php echo $key2['brandName'] ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-
+                    <!-- Category Name First -->
                     <div class="form-group col-md-6">
                       <label class="control-label">Category Name</label>
                       <select class="form-control" id="categoryName" name="categoryName">
                         <option value="">~~SELECT~~</option>
                         <?php
-                        $stmt2 = $conn->prepare("SELECT * FROM `fuel_category` WHERE delete_status='0' ");
+                        // Fetch all categories from the database
+                        $stmt2 = $conn->prepare("SELECT * FROM `fuel_category` WHERE delete_status='0'");
                         $stmt2->execute();
                         $record2 = $stmt2->fetchAll();
+
                         foreach ($record2 as $key2) {
-                        ?>
-                          <option value="<?php echo $key2['id'] ?>" <?php if ($key['categoryName'] == $key2['id']) echo 'selected'; ?>><?php echo $key2['name'] ?></option>
+                          // Check if the category from the form is equal to the current category id and select it
+                          ?>
+                          <option value="<?php echo $key2['id']; ?>" <?php if ($key['id'] == $key2['id'])
+                               echo 'selected'; ?>>
+                            <?php echo $key2['name']; ?>
+                          </option>
                         <?php } ?>
                       </select>
+
                     </div>
 
 
 
+                    <!-- Opening Stock -->
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Number of Liters</label>
+                      <input type="text" class="form-control" id="openning_stock" name="openning_stock"
+                        value="<?php echo $key['openning_stock'] ?>">
+                    </div>
+
+                    <!-- Rate -->
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Rate</label>
+                      <input type="text" class="form-control" id="rate" name="rate" value="<?php echo $key['rate'] ?>">
+                    </div>
+
+                    <!-- Unit Price -->
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Unit Price</label>
+                      <input type="text" class="form-control" id="unit_price" name="unit_price"
+                        value="<?php echo $key['unit_price'] ?>">
+                    </div>
+
+                    <!-- Invoice No (Batch No) -->
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Invoice No</label>
+                      <input type="text" class="form-control" id="bno" name="bno" value="<?php echo $key['bno'] ?>">
+                    </div>
+
+                    <!-- Date -->
+                    <div class="form-group col-md-6">
+                      <label class="control-label">Date</label>
+                      <input type="date" class="form-control" id="date" name="date" value="<?php echo $key['date'] ?>">
+                    </div>
+
                     <div class="form-group col-md-6 col-md-12">
-
                       <button class="btn btn-primary" type="submit" name="update" onclick="addFuel()">Update</button>
-
                     </div>
 
                   <?php } ?>
                 </form>
+
               </div>
 
 
@@ -152,7 +138,7 @@ try {
 
 <script>
   function addFuel() {
-    jQuery.validator.addMethod("alphanumeric", function(value, element) {
+    jQuery.validator.addMethod("alphanumeric", function (value, element) {
       // Check if the value is empty
       if (value.trim() === "") {
         return false;
@@ -165,11 +151,11 @@ try {
       return /^[a-zA-Z0-9\s!@#$%^&*()_-]+$/.test(value);
     }, "Please enter alphanumeric characters with at least one alphabet character.");
 
-    jQuery.validator.addMethod("noDigits", function(value, element) {
+    jQuery.validator.addMethod("noDigits", function (value, element) {
       return this.optional(element) || !/\d/.test(value);
     }, "Please enter a value without digits.");
 
-    jQuery.validator.addMethod("noSpacesOnly", function(value, element) {
+    jQuery.validator.addMethod("noSpacesOnly", function (value, element) {
       // Check if the input contains only spaces
       return value.trim() !== '';
     }, "Please enter a non-empty value");

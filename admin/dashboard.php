@@ -71,31 +71,39 @@ try {
                   <div class="d-flex flex-row p-3">
                      <div class="col-3 align-self-center">
                         <div class="round">
-                           <i class="fas fa-truck-arrow-right"></i>
+                           <i class="fas fa-dollar-sign"></i>
                         </div>
                      </div>
                      <div class="col-9 align-self-center text-right">
                         <div class="m-l-10">
                            <h3 class="mt-0 text-white">
                               <?php
-                              $stmt = $conn->prepare("SELECT count(*) as cnt_name from supplier WHERE delete_status='0' ");
-                              $stmt->execute();
-                              $record = $stmt->fetch(PDO::FETCH_ASSOC); ?>
-                              <?PHP echo $record['cnt_name'];
-                              $name = $record['cnt_name']; ?>
+                              // Get today's date
+                              $todayDate = date('Y-m-d');
+
+                              // Fetch total cash submission for the day (all shifts, all fuel types)
+                              $stmt = $conn->prepare("
+                                SELECT SUM(AmountSubmitted) AS total_cash 
+                                FROM cash_submission 
+                                WHERE date = ? AND delete_status='0'
+                            ");
+                              $stmt->execute([$todayDate]);
+                              $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                              // Display the total cash or default to 0 if no data
+                              echo number_format($record['total_cash'] ?? 0, 2);
+                              ?>
                            </h3>
-                           <p class="mb-0 text-white">Total Supplier</p>
+                           <p class="mb-0 text-white">Total Sales of the Day</p>
                         </div>
                      </div>
                   </div>
                </div>
-
-
-
                <!--end card-body-->
             </div>
             <!--end card-->
          </div>
+
 
          <div class="col-md-6">
             <div class="card bg-danger">
@@ -110,13 +118,13 @@ try {
                         <div class="m-l-10">
                            <h3 class="mt-0 text-white">
                               <?php
-                              $stmt = $conn->prepare("SELECT count(*) as cnt_name from tbl_invoice WHERE delete_status='0' ");
+                              $stmt = $conn->prepare("SELECT count(*) as emp from employee WHERE delete_status='0' ");
                               $stmt->execute();
                               $record = $stmt->fetch(PDO::FETCH_ASSOC); ?>
-                              <?PHP echo $record['cnt_name'];
-                              $name = $record['cnt_name']; ?>
+                              <?PHP echo $record['emp'];
+                              $name = $record['emp']; ?>
                            </h3>
-                           <p class="mb-0 text-white">Total Invoices</p>
+                           <p class="mb-0 text-white">Total Employees</p>
                         </div>
                      </div>
                   </div>
@@ -131,33 +139,51 @@ try {
 
 
          <div class="col-md-6">
-            <div class="card bg-secondary">
-               <div class="card-body py-4">
-                  <div class="d-flex flex-row p-3">
-                     <div class="col-3 align-self-center">
-                        <div class="round">
-                           <i class="fa fa-user"></i>
-                        </div>
-                     </div>
-                     <div class="col-9 align-self-center text-right">
-                        <div class="m-l-10">
-                           <h3 class="mt-0 text-white">
-                              <?php
-                              $stmt = $conn->prepare("SELECT count(*) as cnt_name from customer WHERE delete_status='0' ");
-                              $stmt->execute();
-                              $record = $stmt->fetch(PDO::FETCH_ASSOC); ?>
-                              <?PHP echo $record['cnt_name'];
-                              $name = $record['cnt_name']; ?>
-                           </h3>
-                           <p class="mb-0 text-white">Total Customers</p>
-                        </div>
-                     </div>
+    <div class="card bg-warning">
+        <div class="card-body py-4">
+            <div class="d-flex flex-row p-3">
+                <div class="col-3 align-self-center">
+                    <div class="round">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+                <div class="col-9 align-self-center text-right">
+                    <div class="m-l-10">
+                        <h3 class="mt-0 text-white">
+                            <?php
+                            // Get today's date
+                            $todayDate = date('Y-m-d');
 
-                  </div>
-               </div>
+                            // Query to calculate the total extra/short from the ExtraShort column
+                            $stmt = $conn->prepare("
+                                SELECT SUM(ExtraShort) AS total_extra_short 
+                                FROM cash_submission 
+                                WHERE date = ? AND delete_status = '0'
+                            ");
+                            $stmt->execute([$todayDate]);
+                            $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                            // Get the total extra/short value
+                            $total_extra_short = $record['total_extra_short'] ?? 0;
+
+                            // Check if the total is negative (short) or positive (extra)
+                            if ($total_extra_short < 0) {
+                                echo "Short: " . number_format(abs($total_extra_short), 2);
+                            } else {
+                                echo "Extra: " . number_format($total_extra_short, 2);
+                            }
+                            ?>
+                        </h3>
+                        <p class="mb-0 text-white">Total Extra/Short for the Day</p>
+                    </div>
+                </div>
             </div>
-            <!--end card-->
-         </div>
+        </div>
+        <!--end card-body-->
+    </div>
+    <!--end card-->
+</div>
+
          <!--end card-body-->
       </div>
       <!--end card-->
@@ -166,81 +192,81 @@ try {
 <!--end row-->
 
 
-<div class="chart">
-   <div class="row">
-      <!--   -->
-      <div class="col-sm-5">
-         <!-- Content for the first column -->
-         <div id="piechart" style="width: 400px; height: 400px;"></div>
-      </div>
+<div class="card">
+   <div class="card-body">
+      <h3>Today's Sale</h3>
+      <br>
+      <div class="table-responsive" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd;">
+         <table class="table table-striped table-bordered"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+               <tr>
+                  <th>#</th>
+                  <th>Fuel Type</th>
+                  <th>Units Sold</th>
+                  <th>Price Per Unit</th>
+                  <th>Total Amount</th>
+                  <th>Amount Submitted</th>
+                  <th>Extra/Short</th>
+               </tr>
+            </thead>
+            <tbody>
+               <?php
+               // Get today's date
+               $todayDate = date('Y-m-d');
+
+               // Fetch all fuel categories
+               $fuelQuery = "SELECT id, name FROM fuel_category WHERE delete_status='0'";
+               $fuelStmt = $conn->prepare($fuelQuery);
+               $fuelStmt->execute();
+               $fuelCategories = $fuelStmt->fetchAll(PDO::FETCH_ASSOC);
+
+               $i = 1;
+
+               foreach ($fuelCategories as $fuel) {
+                  // Get cash submission data for the specific fuel type
+                  $cashQuery = "SELECT 
+                                    SUM(closing_read - opening_read) AS total_units,
+                                    AVG(fuelPrice) AS price_per_unit,
+                                    SUM(AmountSubmitted) AS total_submitted 
+                                FROM cash_submission 
+                                WHERE fueltype = ? AND `date` = ?";
+                  $cashStmt = $conn->prepare($cashQuery);
+                  $cashStmt->execute([$fuel['id'], $todayDate]);
+                  $cashData = $cashStmt->fetch(PDO::FETCH_ASSOC);
+
+                  // Default values if no submission exists
+                  $totalUnits = $cashData['total_units'] ?? 0;
+                  $pricePerUnit = $cashData['price_per_unit'] ?? 0;
+                  $totalSubmitted = $cashData['total_submitted'] ?? 0;
+
+                  // Calculate total amount and extra/short
+                  $totalAmount = $totalUnits * $pricePerUnit;
+                  $extraShort = $totalSubmitted - $totalAmount;
+                  ?>
+                  <tr>
+                     <td><?= $i; ?></td>
+                     <td><?= htmlspecialchars($fuel['name']); ?></td>
+                     <td><?= number_format($totalUnits, 2); ?></td>
+                     <td><?= number_format($pricePerUnit, 2); ?></td>
+                     <td><?= number_format($totalAmount, 2); ?></td>
+                     <td><?= number_format($totalSubmitted, 2); ?></td>
+                     <td><?= number_format($extraShort, 2); ?></td>
+                  </tr>
+                  <?php
+                  $i++;
+               }
+               ?>
+            </tbody>
+         </table>
+      </div><!-- End table-responsive -->
+   </div><!-- End card-body -->
+</div><!-- End card -->
 
 
-      <div class="col-sm-7">
-         <div class="card">
-            <div class="card-body">
-               <h3>Today's Billing</h3>
-               <br>
-               <div class="table-responsive">
 
-                  <table class="table table-striped table-bordered dt-responsive nowrap"
-                     style="border-collapse: collapse; border-spacing: 0; width: 100%;" enctype="multipart/form-data">
-                     <thead>
-                        <tr>
-                           <th>#</th>
-                           <th>Build Date</th>
-                           <th>Invoice No.</th>
-                           <th>Customer No.</th>
-                           <th>Customer Name</th>
-                           <th>Email</th>
-                           <th>Address</th>
-                           <th>Total</th>
 
-                        </tr>
-                     </thead>
-                     <tbody>
 
-                        <?php
-                        // Get today's date in the same format as 'build_date' (assuming 'Y-m-d')
-                        $todayDate = date('Y-m-d');
-
-                        // Modify SQL query to only select records with today's date
-                        $sql = "SELECT * FROM tbl_invoice WHERE delete_status='0' AND build_date = ? ORDER BY id DESC";
-
-                        $statement = $conn->prepare($sql);
-                        $statement->execute([$todayDate]); // Bind today's date in the query
-                        $i = 1;
-
-                        while ($item = $statement->fetch(PDO::FETCH_ASSOC)) {
-                           ?>
-
-                           <tr>
-                              <td><?= $i; ?></td>
-                              <td><?= $item['build_date']; ?></td>
-                              <td><?= $item['inv_no']; ?></td>
-                              <td><?= $item['customerPhone']; ?></td>
-                              <td><?php
-                              $stmt2 = $conn->prepare("SELECT * FROM `customer` WHERE delete_status='0' AND id=? ");
-                              $stmt2->execute([$item['customer_id']]);
-                              $record2 = $stmt2->fetch();
-                              echo $record2['brandName'];
-                              ?></td>
-                              <td><?= $item['customerEmail']; ?></td>
-                              <td><?= $item['customerAddress']; ?></td>
-                              <td><?= $item['final_total']; ?></td>
-                           </tr>
-
-                           <?php $i++;
-                        } ?>
-                        
-                     </tbody>
-                  </table>
-               </div><!--end /tableresponsive-->
-            </div><!--end card-body-->
-         </div><!--end card-->
-      </div><!--end col-->
-
-   </div>
-</div>
 
 
 

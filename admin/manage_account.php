@@ -108,10 +108,10 @@ try {
                       <td><?php echo $key['date']; ?></td>
 
                       <td>
-                        <a href="#" onclick="editForm(event, <?php echo $key['id']; ?>,'edit_employee.php')"
+                        <!-- <a href="#" onclick="editForm(event, <?php // echo $key['id']; ?>,'edit_cash_submission.php')"
                           class="btn btn-primary waves-effect waves-light"><i class="fa fa-edit" aria-hidden="true"></i>
 
-                        </a>
+                        </a> -->
 
 
                         <a href="#" class="btn btn-danger"
