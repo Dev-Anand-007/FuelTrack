@@ -266,6 +266,7 @@ try {
 </script>
 <script>
     function validateSubmission() {
+        
         // Custom method to check if the input contains only spaces
         $.validator.addMethod("noSpacesOnly", function (value, element) {
             return value.trim() !== '';
@@ -275,6 +276,9 @@ try {
         $.validator.addMethod("digitsOrDecimal", function (value, element) {
             return this.optional(element) || /^\d+(\.\d+)?$/.test(value); // Matches integer or decimal values
         }, "Please enter a valid number or decimal");
+        $.validator.addMethod("positiveValue", function (value, element) {
+            return this.optional(element) || parseFloat(value) > 0; // Ensures value is greater than 0
+        }, "Please enter a positive value");
 
         $('#cash_submission').validate({
             rules: {
@@ -301,26 +305,31 @@ try {
                     required: true,
                     number: true,
                     noSpacesOnly: true
+                    positiveValue: true
                 },
                 CashSubmitted: {
                     required: true,
                     number: true,
                     noSpacesOnly: true
+                    positiveValue: true
                 },
                 OnlineAmount: {
                     required: true,
                     number: true,
                     noSpacesOnly: true
+                    positiveValue: true
                 },
                 Coin: {
                     required: true,
                     number: true,
                     noSpacesOnly: true
+                    positiveValue: true
                 },
                 TestingDensity: {
                     required: true,
                     number: true,
                     noSpacesOnly: true
+                    positiveValue: true
                 }
             },
             messages: {
@@ -345,24 +354,30 @@ try {
                 fuelPrice: {
                     required: "Please enter the fuel price",
                     number: "Only numeric values are allowed"
+                    positiveValue: "The value must be positive"
                 },
                 CashSubmitted: {
                     required: "Please enter the cash submitted amount",
                     number: "Only numeric values are allowed"
+                    positiveValue: "The value must be positive"
                 },
                 OnlineAmount: {
                     required: "Please enter the online amount",
                     number: "Only numeric values are allowed"
+                    positiveValue: "The value must be positive"
                 },
                 Coin: {
                     required: "Please enter the coin amount",
                     number: "Only numeric values are allowed"
+                    positiveValue: "The value must be positive"
                 },
                 TestingDensity: {
                     required: "Please enter the testing density amount",
                     number: "Only numeric values are allowed"
+                    positiveValue: "The value must be positive"
                 }
             }
         });
+        
     }
 </script>

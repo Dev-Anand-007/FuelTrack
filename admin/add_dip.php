@@ -103,7 +103,7 @@ try {
 
 
                                     <div class="form-group col-md-12">
-                                        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                                        <button class="btn btn-primary" onclick="validateDip()" type="submit" name="submit">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -116,6 +116,90 @@ try {
 </div> <!-- content -->
 <?php include('include/footer.php'); ?>
 
+
+<script>
+    function validateDip(){
+
+    
+   
+        // Custom methods
+        $.validator.addMethod("noSpacesOnly", function (value, element) {
+            return value.trim() !== '';
+        }, "Please enter a valid value.");
+
+        // Validation rules
+        $("#add_dip").validate({
+            rules: {
+                record_date: {
+                    required: true,
+                    date: true
+                },
+                fuel_type: {
+                    required: true
+                },
+                dip: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    max: 99999.99
+                },
+                hydrometer: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    max: 99999.99
+                },
+                temp: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    max: 99999.99
+                },
+                density: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    max: 99999.99
+                }
+            },
+            messages: {
+                record_date: {
+                    required: "Please select a date.",
+                    date: "Please enter a valid date."
+                },
+                fuel_type: {
+                    required: "Please select a fuel type."
+                },
+                dip: {
+                    required: "Please enter the dip value.",
+                    number: "Please enter a valid number.",
+                    min: "Value cannot be less than 0.",
+                    max: "Value cannot exceed 99999.99."
+                },
+                hydrometer: {
+                    required: "Please enter the hydrometer value.",
+                    number: "Please enter a valid number.",
+                    min: "Value cannot be less than 0.",
+                    max: "Value cannot exceed 99999.99."
+                },
+                temp: {
+                    required: "Please enter the temperature.",
+                    number: "Please enter a valid number.",
+                    min: "Value cannot be less than 0.",
+                    max: "Value cannot exceed 99999.99."
+                },
+                density: {
+                    required: "Please enter the density value.",
+                    number: "Please enter a valid number.",
+                    min: "Value cannot be less than 0.",
+                    max: "Value cannot exceed 99999.99."
+                }
+            },
+            
+        });
+ 
+}
+</script>
 
 <!-- <script>
     function validateemployee() {

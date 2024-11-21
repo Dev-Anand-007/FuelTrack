@@ -115,7 +115,7 @@ try {
 
 
                         <a href="#" class="btn btn-danger"
-                          onclick="return confirm('Are you sure you want to delete this item?') && delForm(event, <?php echo $key['id']; ?>,'app/employee_crud.php' );"><i
+                          onclick="return confirm('Are you sure you want to delete this item?') && delForm(event, <?php echo $key['id']; ?>,'app/cash_crud.php' );"><i
                             class="fa fa-trash-alt" aria-hidden="true"></i></a>
 
 

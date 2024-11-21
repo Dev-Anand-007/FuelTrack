@@ -43,7 +43,7 @@ try {
     
     if (isset($_POST['del_id'])) {
 
-        $stmt = $conn->prepare("UPDATE `employee` SET delete_status='1' WHERE id=? ");
+        $stmt = $conn->prepare("UPDATE `cash_submission` SET delete_status='1' WHERE id=? ");
 
         // Apply htmlspecialchars to user inputs
         $del_id = htmlspecialchars($_POST['del_id'], ENT_QUOTES, 'UTF-8');
@@ -52,7 +52,7 @@ try {
 
         $_SESSION['delete'] = "delete";
 
-        header("location:../manage_employee.php");
+        header("location:../manage_account.php");
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
